@@ -3,7 +3,7 @@ import { View } from 'react-native'
 
 function favorite() {
   return (
-<View></View>
+<View>hello</View>
   )
 }
 
