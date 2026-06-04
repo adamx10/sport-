@@ -1,11 +1,13 @@
+
 import { useEffect, useState } from "react";
 import {
   View,
-  Text,
+ Text,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 
-import  fetchSport  from "../../services/api";
+import { fetchSport } from "../../services/api";
 
 export default function Home() {
   const [sports, setSports] = useState<any[]>([]);
@@ -17,24 +19,34 @@ export default function Home() {
 
   const loadSports = async () => {
     try {
-      const { data } = await fetchSport("sports");
+      const data = await fetchSport();
 
-      console.log(data);
+      console.log("SPORTS:", data);
 
       setSports(data);
     } catch (error) {
-      console.log(error);
+      console.log("ERROR:", error);
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   return (
-    <View style={{ padding: 20 }}>
+    <ScrollView style={{ flex: 1, padding: 20 }}>
       <Text
         style={{
           fontSize: 30,
@@ -55,16 +67,29 @@ export default function Home() {
       </Text>
 
       {sports.map((sport) => (
-        <Text
+        <View
           key={sport.id}
           style={{
-            fontSize: 18,
+            backgroundColor: "#fff",
+            padding: 15,
+            borderRadius: 12,
             marginBottom: 10,
+            borderWidth: 1,
+            borderColor: "#ddd",
           }}
         >
-          {sport.name}
-        </Text>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+            }}
+          >
+            {sport.name}
+          </Text>
+
+          <Text>{sport.category}</Text>
+        </View>
       ))}
-    </View>
+    </ScrollView>
   );
 }
