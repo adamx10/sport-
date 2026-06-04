@@ -1,10 +1,9 @@
-
 import { useEffect, useState } from "react";
 import {
   View,
- Text,
+  Text,
   ActivityIndicator,
-  ScrollView,
+  FlatList,
 } from "react-native";
 
 import { fetchSport } from "../../services/api";
@@ -46,7 +45,7 @@ export default function Home() {
   }
 
   return (
-    <ScrollView style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1, padding: 20 }}>
       <Text
         style={{
           fontSize: 30,
@@ -66,30 +65,33 @@ export default function Home() {
         Découvrez votre prochaine passion
       </Text>
 
-      {sports.map((sport) => (
-        <View
-          key={sport.id}
-          style={{
-            backgroundColor: "#fff",
-            padding: 15,
-            borderRadius: 12,
-            marginBottom: 10,
-            borderWidth: 1,
-            borderColor: "#ddd",
-          }}
-        >
-          <Text
+      <FlatList
+        data={sports}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View
             style={{
-              fontSize: 18,
-              fontWeight: "bold",
+              backgroundColor: "#fff",
+              padding: 15,
+              borderRadius: 12,
+              marginBottom: 10,
+              borderWidth: 1,
+              borderColor: "#ddd",
             }}
           >
-            {sport.name}
-          </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              {item.name}
+            </Text>
 
-          <Text>{sport.category}</Text>
-        </View>
-      ))}
-    </ScrollView>
+            <Text>{item.category}</Text>
+          </View>
+        )}
+      />
+    </View>
   );
 }
