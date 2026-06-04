@@ -1,11 +1,12 @@
 import { Text, View } from "react-native";
-import NavBar from "../../layout/navbar"
+import {Sport} from "@/services/apiType";
+
 
 export default function Index() {
   return (
     
    <View>
-    <NavBar />
+  
    </View>
   );
 }
