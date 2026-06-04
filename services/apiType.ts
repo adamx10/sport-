@@ -8,7 +8,7 @@ export  type Sport = {
 
 
 };
-export  type details = {
+export  type Details = {
     id: string;
     name: string;
     image : string;
