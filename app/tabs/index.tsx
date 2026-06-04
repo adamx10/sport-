@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
+import { useRouter } from "expo-router"
+
 import {
   View,
   Text,
   ActivityIndicator,
   FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 
 import { fetchSport } from "../../services/api";
 
 export default function Home() {
+  const router = useRouter();
   const [sports, setSports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -79,19 +85,34 @@ export default function Home() {
               borderColor: "#ddd",
             }}
           >
+              <Image
+            source={{uri:item.image}} style={styles.image}
+            />
             <Text
               style={{
                 fontSize: 18,
                 fontWeight: "bold",
+                color:'red',
               }}
             >
               {item.name}
             </Text>
 
-            <Text>{item.category}</Text>
+            <Text style={styles.category}>{item.category} </Text>
+            <TouchableOpacity 
+             onPress={() => router.push('.') } 
+            ><Text style={styles.button}>adam</Text></TouchableOpacity>
+          
           </View>
         )}
       />
     </View>
   );
 }
+const styles = StyleSheet.create({
+ container: { flex: 1, backgroundColor: '#DFC560', padding: 15 },
+  row: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#D3BA58', padding: 10, marginBottom: 10, borderRadius: 10 ,elevation:10},
+  image: { width: 260, height: 160, borderRadius: 8 },
+  category:{ backgroundColor:'#1E293B', width:60,color:'white',borderRadius:5},
+ button: {backgroundColor:'#1E293B',color:'white', width:50,borderRadius:20,marginLeft:200,marginTop:-25,textAlign:'center'}
+})
