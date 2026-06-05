@@ -1,5 +1,8 @@
-import { useEffect, useState} from "react";
-import { useRouter } from "expo-router"
+import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+
+
+
 
 import {
   View,
@@ -25,9 +28,7 @@ export default function Home() {
   const loadSports = async () => {
     try {
       const data = await fetchSport();
-
       console.log("SPORTS:", data);
-
       setSports(data);
     } catch (error) {
       console.log("ERROR:", error);
@@ -35,6 +36,35 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+
+  const renderDetails = ({ item }: { item: any }) => (
+    <TouchableOpacity onPress={() => router.push(`/details/detailsSport?id=${item.id}`)}>
+      <View
+    
+        style={{
+         
+          padding: 15,
+          borderRadius: 12,
+          marginBottom: 10,
+          borderWidth: 1,
+          borderColor: "#ddd",
+        }}
+      >
+        <Image source={{ uri: item.image }} style={styles.image} />
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "red",
+          }}
+        >
+          {item.name}
+        </Text>
+        <Text style={styles.category}>{item.category}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   if (loading) {
     return (
@@ -73,46 +103,31 @@ export default function Home() {
 
       <FlatList
         data={sports}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              backgroundColor: "#fff",
-              padding: 15,
-              borderRadius: 12,
-              marginBottom: 10,
-              borderWidth: 1,
-              borderColor: "#ddd",
-            }}
-          >
-              <Image
-            source={{uri:item.image}} style={styles.image}
-            />
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color:'red',
-              }}
-            >
-              {item.name}
-            </Text>
-
-            <Text style={styles.category}>{item.category} </Text>
-            <TouchableOpacity 
-             onPress={() => router.push('.') } 
-            ><Text style={styles.button}>adam</Text></TouchableOpacity>
-          
-          </View>
-        )}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderDetails}
       />
     </View>
   );
 }
+
+
 const styles = StyleSheet.create({
- container: { flex: 1, backgroundColor: '#DFC560', padding: 15 },
-  row: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#D3BA58', padding: 10, marginBottom: 10, borderRadius: 10 ,elevation:10},
-  image: { width: 260, height: 160, borderRadius: 8 },
-  category:{ backgroundColor:'#1E293B', width:60,color:'white',borderRadius:5},
- button: {backgroundColor:'#1E293B',color:'white', width:50,borderRadius:20,marginLeft:200,marginTop:-25,textAlign:'center'}
-})
+  image: {
+    width: "100%",
+    height: 150,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  category: {
+    fontSize: 14,
+    color: "gray",
+  },
+});
+
+
+
+
+
+
+
+
