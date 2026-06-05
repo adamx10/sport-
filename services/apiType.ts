@@ -15,7 +15,7 @@ export  type Details = {
     description : string;
     category : string;
     players : string;
-    rules : string ;
+    rule: string ;
     gallery : string ;
     equipment: string;
 

@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { fetchSport } from "../../services/api";
+import  apiData from "../../services/api";
 
 export default function Home() {
   const router = useRouter();
@@ -22,12 +22,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadSports();
-  }, []);
-
-  const loadSports = async () => {
+    const loadSports = async () => {
     try {
-      const data = await fetchSport();
+      const data = await apiData();
       console.log("SPORTS:", data);
       setSports(data);
     } catch (error) {
@@ -35,11 +32,14 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  };
+  };loadSports()
+  }, []);
+
+  
 
 
   const renderDetails = ({ item }: { item: any }) => (
-    <TouchableOpacity onPress={() => router.push(`/details/detailsSport?id=${item.id}`)}>
+    <TouchableOpacity onPress={() => router.push(`/details/${item.id}`)}>
       <View
     
         style={{

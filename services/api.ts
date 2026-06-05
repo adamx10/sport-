@@ -1,16 +1,19 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "https://6a1eeb33b79eec0d6cf046ed.mockapi.io/X10",
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
-export const fetchSport = async () => {
-  const response = await api.get("/sports");
-  return response.data;
-};
 
-export default api;
+const apiData = async () => {
+    const urlApi = "https://6a22dd275c610353286a6f08.mockapi.io/api/v1/sport";
+
+    try{
+        const data = await axios.get(urlApi);
+        return data.data
+    }catch(error){
+        console.log(error)
+    }
+
+}
+
+
+
+export default apiData
